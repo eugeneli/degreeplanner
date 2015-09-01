@@ -10,16 +10,18 @@ if($_SESSION['n'] == $_POST['non'])
 {
 	if($_GET['a'] == "c")
 	{
-		$plan->alterClassCompletion($_POST['classid'], $_POST['comp']);
+		if($plan->checkClass($_POST['classid']))
+			$plan->alterClassCompletion($_POST['classid'], $_POST['comp']);
 	}
 	else if($_GET['a'] == "s")
 	{
-		if(strlen($_POST['creds']) < 4)
+		if(strlen($_POST['creds']) <= 4)
 			$plan->replaceClass($_POST['semester'], $_POST['classid'], $_POST['planid'], $_POST['name'], $_POST['creds'], $_POST['comp']);
 	}
 	else if($_GET['a'] == "r")
 	{
-		$plan->removeClass($_POST['classid']);
+		if($plan->checkClass($_POST['classid']))
+			$plan->removeClass($_POST['classid']);
 	}
 	else if($_GET['a'] == "l")
 	{

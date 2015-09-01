@@ -385,6 +385,32 @@ class Plan {
 		return $valid;
 	}
 
+	function checkClass($classId)
+	{
+		global $db;
+
+		$valid = false;
+
+		$stmt = $db->stmt_init();
+		 
+		if($stmt->prepare("SELECT `pid` FROM `classes` WHERE `id` = ?"))
+		{
+		    $stmt->bind_param('s', $classId);
+		    $stmt->execute();
+
+		    $stmt->bind_result($pid);
+
+			while($stmt->fetch())
+			{
+				$valid = $this->pid == $pid;
+			}
+
+			$stmt->close();
+		}
+
+		return $valid;
+	}
+
 	function removePassword()
 	{
 		global $db;
